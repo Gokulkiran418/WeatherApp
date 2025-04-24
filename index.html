@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts: Roboto -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+     <link rel="stylesheet" href="style.css">
+    
+</head>
+<body class="gradient-background">
+    <div class="container text-center" >
+      <div class="card" style = "width:auto">
+
+        <h1 class="mt-5">Weather App</h1>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="input-group mb-3">
+
+                    <input type="text" class="form-control" placeholder="Enter" id="city-input">
+                    <button class="btn btn-primary" id="search-btn">Search</button>
+                    <button class="btn btn-secondary" id="location-btn">Use Current Location</button>
+                </div>
+                <div id="history" class="mb-3"></div>
+            </div>
+        </div>
+      </div>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card" id="weather-card" style="display: none;">
+                    <div class="card-body">
+                        <h5 class="card-title" id="city-name"></h5>
+                        <p class="card-text" id="date-time"></p>
+                        <img id="weather-icon" src="" alt="Weather Icon">
+                        <p class="card-text" id="temperature"></p>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item" id="humidity"></li>
+                            <li class="list-group-item" id="wind-speed"></li>
+                            <li class="list-group-item" id="pressure"></li>
+                            <li class="list-group-item" id="feels-like"></li>
+                            <li class="list-group-item" id="sunrise"></li>
+                            <li class="list-group-item" id="sunset"></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="text-center" id="spinner" style="display: none;">
+                    <div class="spinner-border" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="script.js"></script>
+</body>
+</html>
