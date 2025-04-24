@@ -75,35 +75,48 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Fetch weather by coordinates
     async function fetchWeatherByCoordinates(lat, lon) {
+        console.log(`Fetching weather for lat: ${lat}, lon: ${lon}, types: ${typeof lat}, ${typeof lon}`);
         showSpinner();
         try {
-            const response = await fetch(`/api/weather?lat=${lat}&lon=${lon}`);
-            if (!response.ok) {
-                throw new Error('Unable to fetch weather for this location');
-            }
-            const data = await response.json();
-            displayWeather(data);
+          // Ensure lat and lon are numbers
+          const latNum = Number(lat);
+          const lonNum = Number(lon);
+          if (isNaN(latNum) || isNaN(lonNum)) {
+            throw new Error('Invalid coordinates: latitude or longitude is not a number');
+          }
+          const response = await fetch(`/api/weather?lat=${latNum}&lon=${lonNum}`);
+          console.log('Fetch response status:', response.status);
+          if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(`Unable to fetch weather: ${errorData.error || 'Unknown error'}`);
+          }
+          const data = await response.json();
+          console.log('Weather data:', data);
+          displayWeather(data);
         } catch (error) {
-            handleError(error.message);
+          console.error('Fetch error:', error.message);
+          handleError(error.message);
         } finally {
-            hideSpinner();
+          hideSpinner();
         }
-    }
-
-    // Get current location
-    function getLocation() {
+      }
+      
+      function getLocation() {
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(position => {
-                const lat = position.coords.latitude;
-                const lon = position.coords.longitude;
-                fetchWeatherByCoordinates(lat, lon);
-            }, error => {
-                handleError('Geolocation error: ' + error.message);
-            });
+          console.log('Requesting geolocation...');
+          navigator.geolocation.getCurrentPosition(position => {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            console.log(`Got coordinates: lat=${lat}, lon=${lon}, types: ${typeof lat}, ${typeof lon}`);
+            fetchWeatherByCoordinates(lat, lon);
+          }, error => {
+            console.error('Geolocation error:', error.message);
+            handleError('Geolocation error: ' + error.message);
+          });
         } else {
-            handleError('Geolocation is not supported by this browser.');
+          handleError('Geolocation is not supported by this browser.');
         }
-    }
+      }
 
     // Save city to search history
     function saveToHistory(city) {
